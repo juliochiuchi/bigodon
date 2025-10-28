@@ -8,8 +8,15 @@ import "@/global.css";
 // } from "@expo-google-fonts/inter";
 
 // import { Loading } from "@/components/loading";
-import { Slot } from "expo-router";
-import { View } from "react-native";
+import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
+// import { tokenCache } from '@clerk/clerk-expo/token-cache';
+import { tokenCache } from '@/storage/tokenCache';
+import { router, Slot } from "expo-router";
+import { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
+
+const PUBLIC_CLERK_PUBLISHABLE_KEY = 
+process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 
 export default function Layout() {
   // const [fontsLoaded] = useFonts({
@@ -22,10 +29,28 @@ export default function Layout() {
   // if (!fontsLoaded) {
   //   return <Loading />
   // }
+
+  function InitialLayout() {
+    const { isLoaded, isSignedIn } = useAuth();
+
+    useEffect(() => {
+    if (!isLoaded) return
+
+    if (isSignedIn)
+      router.replace("/(auth)")
+    else
+      router.replace("/(public)")
+    }, [isSignedIn])
+
+
+    return isLoaded ? <Slot /> : <ActivityIndicator className="flex-1 items-center justify-center" />
+  }
   
   return (
-    <View className="flex-1 bg-causbur-background-screen pt-10">
-      <Slot />
+    <View className="bg-gray-900 flex-1 p-8">
+      <ClerkProvider publishableKey={PUBLIC_CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
+        <InitialLayout />
+      </ClerkProvider>
     </View>
   )
 }
