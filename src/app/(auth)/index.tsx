@@ -5,7 +5,7 @@ import { Image, Text, View } from "react-native";
 export default function Home() {
   const { signOut, getToken } = useAuth()
   const { user } = useUser()
-  
+
   return (
     <View className="flex-1 p-8 justify-center items-center gap-3">
       <Text className="text-lg font-bold text-white">Hello World!</Text>
