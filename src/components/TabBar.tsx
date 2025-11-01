@@ -1,14 +1,11 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useLinkBuilder, useTheme } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { ReduceMotion, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { TabBarButton } from './TabBarButton';
 
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  const { colors } = useTheme();
-  const { buildHref } = useLinkBuilder();
-
   const [dimensions, setDimensions] = useState({
     height: 20,
     width: 100,
@@ -33,20 +30,16 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     }
   })
 
-  // useEffect(() => {
-  //   tabPositionX.value = withSpring(buttonWidth * state.index)
-  // }, [buttonWidth, state.index])
-
   return (
     <View
       onLayout={onTabBarLayout}
-      className="bottom-2 absolute flex-row justify-between items-center bg-white mx-12 py-4 rounded-3xl shadow-xl"
+      className="bottom-2 absolute flex-row justify-between items-center bg-bigodon-bg-tab-menu mx-12 py-4 rounded-3xl shadow-xl"
     >
       <Animated.View
-        className="absolute bg-[#723feb] rounded-[30px] mx-3"
+        className="absolute bg-[#6d5ae6] rounded-[30px] mx-3"
         style={[animatedStyle, {
           height: dimensions.height - 15,
-          width: buttonWidth - 25
+          width: buttonWidth - 20
         }]}
       />
       {state.routes.map((route, index) => {
@@ -61,7 +54,14 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         const isFocused = state.index === index;
 
         const onPress = () => {
-          tabPositionX.value = withSpring(buttonWidth * index, { duration: 200 })
+          tabPositionX.value = withSpring(buttonWidth * index, {
+            duration: 733,
+            dampingRatio: 0.5,
+            mass: 4,
+            overshootClamping: undefined,
+            energyThreshold: 6e-9,
+            reduceMotion: ReduceMotion.System,
+          })
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -71,6 +71,8 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name, route.params);
           }
+
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         };
 
         const onLongPress = () => {
@@ -81,40 +83,13 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         };
 
         return (
-          // <PlatformPressable
-          //   key={route.name}
-          //   href={buildHref(route.name, route.params)}
-          //   accessibilityState={isFocused ? { selected: true } : {}}
-          //   accessibilityLabel={options.tabBarAccessibilityLabel}
-          //   testID={options.tabBarButtonTestID}
-          //   onPress={onPress}
-          //   onLongPress={onLongPress}
-          //   className="flex-1 justify-center items-center gap-1"
-          // >
-          //   {
-          //     icon[route.name as keyof typeof icon]?.({
-          //       color: isFocused ? '#673ab7' : '#222'
-          //     })
-          //   }
-          //   <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
-          //     {
-          //       typeof label === 'string'
-          //         ? label
-          //         : label({
-          //           focused: isFocused, color: isFocused
-          //             ? '#673ab7'
-          //             : '#222', position: 'below-icon', children: ''
-          //         })
-          //     }
-          //   </Text>
-          // </PlatformPressable>
           <TabBarButton
             key={route.name}
             onPress={onPress}
             onLongPress={onLongPress}
             isFocused={isFocused}
             routeName={route.name}
-            color={isFocused ? '#fff' : '#222'}
+            color={isFocused ? '#fff' : '#fff'}
             label={label}
           />
         );

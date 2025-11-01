@@ -1,4 +1,4 @@
-import { icon } from "@/app/constants/icon";
+import { icon } from "@/constants/icon";
 import { useEffect } from "react";
 import { Pressable, PressableProps } from "react-native";
 import Animated, {
@@ -23,7 +23,6 @@ export function TabBarButton({
   color: string,
   label: string | React.ReactNode | ((props: { focused: boolean; color: string; position: 'below-icon' | 'beside-icon'; children: string; }) => React.ReactNode)
 }) {
-  // const { buildHref } = useLinkBuilder();
   const scale = useSharedValue(0)
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export function TabBarButton({
     return { opacity }
   })
 
-  const labelColor = isFocused ? '#673ab7' : '#222'
+  const labelColor = isFocused ? '#6d5ae6' : '#fff'
   const labelContent = typeof label === 'function'
     ? label({ focused: isFocused, color: labelColor, position: 'below-icon', children: '' })
     : label
