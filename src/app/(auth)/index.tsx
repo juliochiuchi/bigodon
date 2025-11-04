@@ -1,9 +1,9 @@
-import { CardAppointment } from "@/components/CardApponitment";
+import { AppointmentCard } from "@/components/ApponitmentCard";
 import { Category } from "@/components/Category";
 import { Header } from "@/components/Header";
 import { Offer } from "@/components/Offer";
 import { ServiceCard } from "@/components/ServiceCard";
-import { cardAppointmentList, CATEGORIES, OFFER_LIST, ServiceProps, SERVICES } from "@/constants/services/data";
+import { appointmentCardList, CATEGORIES, OFFER_LIST, ServiceProps, SERVICES } from "@/constants/services/data";
 import { useAuth, useUser } from "@clerk/clerk-expo";
 import React, { useRef, useState } from "react";
 import { Alert, FlatList, SectionList, Text, View } from "react-native";
@@ -51,7 +51,7 @@ export default function Home() {
 
             <View className="mt-6 gap-2">
               <Text className="font-heading text-2xl text-bigodon-white">Seu próximo horário</Text>
-              <CardAppointment appointment={cardAppointmentList[0]} />
+              <AppointmentCard appointment={appointmentCardList[0]} />
             </View>
 
             <View className="mt-6 gap-2">

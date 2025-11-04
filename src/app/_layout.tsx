@@ -10,10 +10,11 @@ import {
 // import { Loading } from "@/components/loading";
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 // import { tokenCache } from '@clerk/clerk-expo/token-cache';
+import { colors } from "@/config/colors";
 import { tokenCache } from '@/storage/tokenCache';
-import { router, Slot } from "expo-router";
+import { router, Stack } from "expo-router";
 import React, { useEffect } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Platform, View } from "react-native";
 
 const PUBLIC_CLERK_PUBLISHABLE_KEY =
   process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
@@ -25,10 +26,6 @@ export default function Layout() {
     Poppins_600SemiBold,
     Poppins_700Bold,
   })
-
-  // if (!fontsLoaded) {
-  //   return <Loading />
-  // }
 
   function InitialLayout() {
     const { isLoaded, isSignedIn } = useAuth();
@@ -42,8 +39,27 @@ export default function Layout() {
         router.replace("/(public)")
     }, [isSignedIn])
 
-
-    return isLoaded ? <Slot /> : <ActivityIndicator className="flex-1 items-center justify-center" />
+    return isLoaded ? (
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(public)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="schedule"
+          options={{
+            // Efeito de pilha/sheet no iOS e modal no Android
+            presentation: Platform.OS === 'ios' ? 'formSheet' : 'modal',
+            headerShown: false,
+            contentStyle: { backgroundColor: colors['bigodon-bg-screen'] },
+          }}
+        />
+      </Stack>
+    ) : (
+      <ActivityIndicator className="flex-1 items-center justify-center" />
+    )
   }
 
   return (

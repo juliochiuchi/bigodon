@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { Image, ImageProps, Text, View } from "react-native";
 
-type CardAppointmentProps = {
+type AppointmentCardProps = {
   appointment: {
     serviceName: string;
     serviceDate: string;
@@ -11,7 +11,7 @@ type CardAppointmentProps = {
   }
 }
 
-export const CardAppointment = ({ appointment }: CardAppointmentProps) => {
+export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
   return (
     // <View className="bg-bigodon-bg-button p-4 rounded-[14px] items-center flex-row gap-2">
     //   <Feather name="calendar" size={14} color="white" />

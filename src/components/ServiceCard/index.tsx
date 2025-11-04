@@ -1,4 +1,5 @@
 import { formatCurrency } from "@/utils/functions/format-currency";
+import { router } from "expo-router";
 import { forwardRef } from "react";
 import { Image, ImageProps, Text, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 
@@ -30,7 +31,19 @@ export const ServiceCard = forwardRef<typeof TouchableOpacity, ServiceProps>(({ 
 
         <View className="flex-row gap-4 items-end justify-between">
           <Text className="text-bigodon-color-informative text-sm font-body">{formatCurrency(data.servicePrice)}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              router.push({
+                pathname: '/schedule',
+                params: {
+                  id: String(data.id),
+                  name: data.serviceName,
+                  price: String(data.servicePrice),
+                  category: data.serviceCategory,
+                }
+              })
+            }}
+          >
             <Text className="text-bigodon-color-button text-sm font-body p-3 bg-bigodon-bg-button rounded-2xl">Agendar</Text>
           </TouchableOpacity>
         </View>

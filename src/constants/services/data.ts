@@ -1,4 +1,4 @@
-export const cardAppointmentList = [
+export const appointmentCardList = [
   {
     serviceName: "Aparar a Barba",
     serviceDate: "21/12/2025",
