@@ -5,7 +5,7 @@ export const colors = {
   "bigodon-bg-button": "#6d5ae6",
   "bigodon-color-button": "#ffffff",
   "bigodon-white": "#ffffff",
-  "bigodon-bg-card-appointment": "#1f212a",
+  "bigodon-bg-card": "#1f212a",
   "bigodon-bg-confirm-appointment": "#86efac",
   "bigodon-color-black": "#000000",
   "bigodon-border-offer-economy": "#6d5ae6",

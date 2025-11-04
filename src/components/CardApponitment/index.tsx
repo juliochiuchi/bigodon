@@ -20,7 +20,7 @@ export const CardAppointment = ({ appointment }: CardAppointmentProps) => {
     //   </Text>
     // </View>
 
-    <View className="bg-bigodon-bg-card-appointment text-bigodon-white p-4 rounded-[14px] flex-row justify-stretch gap-4">
+    <View className="bg-bigodon-bg-card text-bigodon-white p-4 rounded-[14px] flex-row justify-stretch gap-4">
       <Image source={appointment?.cover} className="rounded-2xl w-32 h-32" />
 
       <View className="flex-1 justify-between">

@@ -19,7 +19,7 @@ export function Offer({
 }: OfferProps) {
   return (
     <Pressable className={clsx(
-      "bg-bigodon-bg-card-appointment rounded-[14px]", ""
+      "bg-bigodon-bg-card rounded-[14px]", ""
     )} {...rest}>
       <View className="flex-row items-stretch justify-stretch gap-4">
         <View className="p-4 gap-2 justify-between max-w-[200px]">
